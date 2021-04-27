@@ -1,13 +1,9 @@
  
 import React from 'react';
 import main from './assets/main.png';
-import data from './data.json';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
-
 export default function MainPage() {
   console.disableYellowBox = true;
-  let tip = data.tip;
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>나만의꿀팁</Text>
@@ -34,7 +30,6 @@ export default function MainPage() {
             </View>
           </View>)
         }
-
       </View>
     </ScrollView>
   );
@@ -99,43 +94,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "700",
     textAlign: "center"
-  },
-  cardContainer: {
-    marginTop: 10,
-    marginLeft: 10
-  },
-  card: {
-    flex: 1,
-    //컨텐츠들을 가로로 나열
-    //세로로 나열은 column <- 디폴트 값임 
-    flexDirection: "row",
-    margin: 10,
-    borderBottomWidth: 0.5,
-    borderBottomColor: "#eee",
-    paddingBottom: 10
-
-  },
-  cardImage: {
-    flex: 1,
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-  },
-  cardText: {
-    flex: 2,
-    flexDirection: "column",
-    marginLeft: 10,
-  },
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: "700"
-  },
-  cardDesc: {
-    fontSize: 15
-  },
-  cardDate: {
-    fontSize: 10,
-    color: "#A6A6A6",
   }
+ 
 
 });

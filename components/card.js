@@ -1,6 +1,8 @@
 import React from 'react';
+import data from './data.json';
 
 export default function card() {
+  let tip = data.tip;
   return (
     <View style={styles.cardContainer}>
     {/* 하나의 카드 영역을 나타내는 View */}
