@@ -1,32 +1,24 @@
 import React from 'react';
-import data from './data.json';
 
-export default function card() {
-  let tip = data.tip;
-  return (
-    <View style={styles.cardContainer}>
-    {/* 하나의 카드 영역을 나타내는 View */}
-    {tip.map(
-      (content, i) =>
-      <View style={styles.card} key={i}>
-        <Image style={styles.cardImage} source={{ uri: content.image }} />
-        <View style={styles.cardText}>
-          <Text style={styles.cardTitle} numberOfLines={1}>{content.title}</Text>
-          <Text style={styles.cardDesc} numberOfLines={3}>{content.desc}</Text>
-          <Text style={styles.cardDate}>{content.date}</Text>
+export default function card({ content }) {
+    return (
+        <View style={styles.card}>
+            <Image style={styles.cardImage} source={{ uri: content.image }} />
+            <View style={styles.cardText}>
+                <Text style={styles.cardTitle} numberOfLines={1}>{content.title}</Text>
+                <Text style={styles.cardDesc} numberOfLines={3}>{content.desc}</Text>
+                <Text style={styles.cardDate}>{content.date}</Text>
+            </View>
         </View>
-      </View>)
-    }
-  </View>
 
-  )
+    )
 }
 const styles = StyleSheet.create({
     cardContainer: {
         marginTop: 10,
         marginLeft: 10
-      },
-      card: {
+    },
+    card: {
         flex: 1,
         //컨텐츠들을 가로로 나열
         //세로로 나열은 column <- 디폴트 값임 
@@ -35,29 +27,29 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         borderBottomColor: "#eee",
         paddingBottom: 10
-    
-      },
-      cardImage: {
+
+    },
+    cardImage: {
         flex: 1,
         width: 100,
         height: 100,
         borderRadius: 10,
-      },
-      cardText: {
+    },
+    cardText: {
         flex: 2,
         flexDirection: "column",
         marginLeft: 10,
-      },
-      cardTitle: {
+    },
+    cardTitle: {
         fontSize: 20,
         fontWeight: "700"
-      },
-      cardDesc: {
+    },
+    cardDesc: {
         fontSize: 15
-      },
-      cardDate: {
+    },
+    cardDate: {
         fontSize: 10,
         color: "#A6A6A6",
-      }
+    }
 
 })
