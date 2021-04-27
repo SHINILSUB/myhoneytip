@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function card({ content }) {
+export default function Card({ content }) {
     return (
         <View style={styles.card}>
             <Image style={styles.cardImage} source={{ uri: content.image }} />
@@ -14,10 +14,6 @@ export default function card({ content }) {
     )
 }
 const styles = StyleSheet.create({
-    cardContainer: {
-        marginTop: 10,
-        marginLeft: 10
-    },
     card: {
         flex: 1,
         //컨텐츠들을 가로로 나열
