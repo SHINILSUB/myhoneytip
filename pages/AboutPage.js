@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import card from '../components/Card'
 
 
 export default function AboutPage() {
@@ -16,7 +17,8 @@ export default function AboutPage() {
                 <Text style={styles.buttonText}>인스타계정</Text>
             </TouchableOpacity>
         </View>
-    </View>)
+    </View>
+    )
 }
 const styles = StyleSheet.create({
     Container: {
