@@ -4,6 +4,7 @@ import Aboutpage from './pages/AboutPage';
 
 export default function App() {
   return (
-    <MainPage/>
+    <Aboutpage/>
+    //<MainPage />
   )
 }
