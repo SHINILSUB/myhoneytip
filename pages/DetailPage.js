@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import * as Linking from 'expo-linking';
 import { Share } from "react-native";
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 
@@ -37,6 +38,9 @@ export default function DetailPage({ navigation, route }) {
             message: `${tip.title} \n\n ${tip.desc} \n\n ${tip.image}`,
         });
     }
+    const link = () => {
+        Linking.openURL("https://www.notion.so/React-Native-df81d2ba5ae04295b47de2a97183779c")
+    }
     return (
         // ScrollView에서 flex 숫자는 의미가 없음
         //height 값과 margin,padding 설정 주의
@@ -48,6 +52,7 @@ export default function DetailPage({ navigation, route }) {
                 <View style={styles.buttonGroup}>
                     <TouchableOpacity style={styles.button} onPress={popup}><Text style={styles.buttonText}>팁 찜하기</Text></TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={share}><Text style={styles.buttonText}>팁 공유하기</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={link}><Text style={styles.buttonText}>외부링크</Text></TouchableOpacity>
                 </View>
 
             </View>
