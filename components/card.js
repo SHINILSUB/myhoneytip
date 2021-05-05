@@ -1,16 +1,17 @@
 import React from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
-export default function Card({ content }) {
+export default function Card({ content, navigation }) {
     return (
-        <View style={styles.card}>
-            <Image style={styles.cardImage} source={{ uri: content.image }} />
+        //버튼 기능을 활성화하기 위해 TouchableOpacity 사용
+        <TouchableOpacity style={styles.card} onPress={()=>{navigation.navigate('DetailPage', content)}} >
+            <Image style={styles.cardImage} source={{ uri: content.image }}/>
             <View style={styles.cardText}>
                 <Text style={styles.cardTitle} numberOfLines={1}>{content.title}</Text>
                 <Text style={styles.cardDesc} numberOfLines={3}>{content.desc}</Text>
                 <Text style={styles.cardDate}>{content.date}</Text>
             </View>
-        </View>
-
+        </TouchableOpacity>
     )
 }
 const styles = StyleSheet.create({

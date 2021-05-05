@@ -1,10 +1,13 @@
 import React from 'react';
-import MainPage from './pages/MainPage';
-import Aboutpage from './pages/AboutPage';
+
+import {NavigationContainer} from '@react-navigation/native';
+import StackNavigator from './navigation/StackNavigator'
+
+
 
 export default function App() {
   return (
-    <Aboutpage/>
-    //<MainPage />
-  )
+    <NavigationContainer>
+    <StackNavigator/>
+ </NavigationContainer>);
 }
