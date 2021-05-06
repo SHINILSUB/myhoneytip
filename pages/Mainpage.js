@@ -2,9 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import main from '../assets/main.png';
 import data from '../data.json';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import Card from '../components/Card';
 import Loading from '../components/Loading';
+import * as Location from "expo-location";
+import axios from "axios"
 
 export default function MainPage({ navigation }) {
   console.disableYellowBox = true;
@@ -12,6 +14,10 @@ export default function MainPage({ navigation }) {
   const [state, setState] = useState([])
   const [cateState, setCateState] = useState([])
   const [ready, setReady] = useState(true)//기본값이 true
+  const [weather, setWeather] = useState({
+    temp : 0,
+    condition : ''
+  })
 
   //useEffect를 거쳐야 useState에 저장
   useEffect(() => {
@@ -27,9 +33,33 @@ export default function MainPage({ navigation }) {
       let tip = data.tip;
       setState(tip)
       setCateState(tip)
+      getLocation()
       setReady(false)
     }, 1000)
   }, [])
+
+  const getLocation = async () => {
+    try {
+      await Location.requestBackgroundPermissionsAsync();
+      const locationData = await Location.getCurrentPositionAsync()
+      console.log(locationData['coords']['latitude'])
+      console.log(locationData['coords']['longitude'])
+      const API_KEY = "cfc258c75e1da2149c33daffd07a911d";
+      const result = await axios.get(
+        `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+      );
+      console.log(result)
+      const temp = result.data.main.temp; 
+      const condition = result.data.weather[0].main
+      console.log(temp)
+      setWeather({
+        temp,condition
+      })
+
+    } catch (error) {
+      Alert.alert('위치를 찾을 수 없습니다.', '앱 껏다 켜봐요')
+    }
+  }
 
   const category = (cate) => {
     if (cate == "전체보기") {
@@ -44,6 +74,7 @@ export default function MainPage({ navigation }) {
 
   return ready ? <Loading /> : (
     <ScrollView style={styles.container}>
+      <Text style={styles.weather}>오늘의 날씨: {weather.temp + '°C   ' + weather.condition} </Text>
       <Image style={styles.mainImage} source={main} />
       {/* horizental scroll*/}
       <ScrollView style={styles.middleContainer} horizontal indicatorStyle={"white"}>
@@ -75,6 +106,10 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginTop: 50,
     marginLeft: 20
+  },
+  weather:{
+    alignSelf:"flex-end",
+    paddingRight:20
   },
   mainImage: {
     width: '90%',
