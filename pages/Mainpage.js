@@ -7,6 +7,7 @@ import Card from '../components/Card';
 import Loading from '../components/Loading';
 import * as Location from "expo-location";
 import axios from "axios"
+import { firebase_db } from "../firebaseConfig"
 
 export default function MainPage({ navigation }) {
   console.disableYellowBox = true;
@@ -15,8 +16,8 @@ export default function MainPage({ navigation }) {
   const [cateState, setCateState] = useState([])
   const [ready, setReady] = useState(true)//기본값이 true
   const [weather, setWeather] = useState({
-    temp : 0,
-    condition : ''
+    temp: 0,
+    condition: ''
   })
 
   //useEffect를 거쳐야 useState에 저장
@@ -29,12 +30,14 @@ export default function MainPage({ navigation }) {
       navigation.setOptions({
         title: '나만의 꿀팁'
       })
-      //꿀팁 데이터로 모두 초기화 준비
-      let tip = data.tip;
-      setState(tip)
-      setCateState(tip)
-      getLocation()
-      setReady(false)
+      firebase_db.ref('/tip').once('value').then((snapshot) => {
+        console.log("this is fire base!")
+        let tip = snapshot.val();
+        setState(tip)
+        setCateState(tip)
+        getLocation()
+        setReady(false)
+      })
     }, 1000)
   }, [])
 
@@ -49,11 +52,11 @@ export default function MainPage({ navigation }) {
         `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
       );
       console.log(result)
-      const temp = result.data.main.temp; 
+      const temp = result.data.main.temp;
       const condition = result.data.weather[0].main
       console.log(temp)
       setWeather({
-        temp,condition
+        temp, condition
       })
 
     } catch (error) {
@@ -78,7 +81,7 @@ export default function MainPage({ navigation }) {
       <Image style={styles.mainImage} source={main} />
       {/* horizental scroll*/}
       <ScrollView style={styles.middleContainer} horizontal indicatorStyle={"white"}>
-      <TouchableOpacity style={styles.middleButtonAll} onPress={() => {category('전체보기')}}><Text style={styles.middleButtonTextAll}>전체보기</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.middleButtonAll} onPress={() => { category('전체보기') }}><Text style={styles.middleButtonTextAll}>전체보기</Text></TouchableOpacity>
         <TouchableOpacity style={styles.middleButton01} onPress={() => { category('생활') }} ><Text style={styles.middleButtonText}>생활</Text></TouchableOpacity>
         <TouchableOpacity style={styles.middleButton02} onPress={() => { category('재테크') }} ><Text style={styles.middleButtonText}>재테크</Text></TouchableOpacity>
         <TouchableOpacity style={styles.middleButton03} onPress={() => { category('반려견') }} ><Text style={styles.middleButtonText}>반려견</Text></TouchableOpacity>
@@ -107,9 +110,9 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginLeft: 20
   },
-  weather:{
-    alignSelf:"flex-end",
-    paddingRight:20
+  weather: {
+    alignSelf: "flex-end",
+    paddingRight: 20
   },
   mainImage: {
     width: '90%',
@@ -166,14 +169,14 @@ const styles = StyleSheet.create({
     margin: 7
   },
   middleButtonTextAll: {
-    color:"#fff",
-    fontWeight:"700",
-    textAlign:"center"
+    color: "#fff",
+    fontWeight: "700",
+    textAlign: "center"
   },
   middleButtonText: {
-    color:"#fff",
-    fontWeight:"700",
-    textAlign:"center"
+    color: "#fff",
+    fontWeight: "700",
+    textAlign: "center"
   },
   cardContainer: {
     marginTop: 10,
