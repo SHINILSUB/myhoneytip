@@ -6,7 +6,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'rea
 import Card from '../components/Card';
 import Loading from '../components/Loading';
 
-export default function MainPage({ navigation, route }) {
+export default function MainPage({ navigation }) {
   console.disableYellowBox = true;
 
   const [state, setState] = useState([])
@@ -29,8 +29,6 @@ export default function MainPage({ navigation, route }) {
       setCateState(tip)
       setReady(false)
     }, 1000)
-
-
   }, [])
 
   const category = (cate) => {

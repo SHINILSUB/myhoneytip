@@ -3,8 +3,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import DetailPage from '../pages/DetailPage';
 import Mainpage from '../pages/Mainpage';
+import AboutPage from '../pages/AboutPage';
+import LikePage from '../pages/LikePage';
 
-//스택 네비게이션 라이브러리가 제공해주는 여러 기능
+//스택 네비게이션 라이브러리가 제공하는 기능의 객체 사용가능.
 //항상 상단에 선언하고 시작하는게 규칙
 const Stack = createStackNavigator();
 
@@ -28,9 +30,10 @@ const StackNavigator = () => {
                 headerBackTitleVisible: false
             }}
         >
-
             <Stack.Screen name="Mainpage" component={Mainpage} />
             <Stack.Screen name="DetailPage" component={DetailPage} />
+            <Stack.Screen name="AboutPage" component={AboutPage} />
+            <Stack.Screen name="LikePage" component={LikePage} />
         </Stack.Navigator>
     )
 }
