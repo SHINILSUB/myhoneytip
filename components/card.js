@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 export default function Card({ content, navigation }) {
     return (
         //버튼 기능을 활성화하기 위해 TouchableOpacity 사용
-        <TouchableOpacity style={styles.card} onPress={() => { navigation.navigate('DetailPage', content) }} >
+        <TouchableOpacity style={styles.card} onPress={() => { navigation.navigate('DetailPage', {idx:content.idx})}}>
             <Image style={styles.cardImage} source={{ uri: content.image }} />
             <View style={styles.cardText}>
                 <Text style={styles.cardTitle} numberOfLines={1}>{content.title}</Text>

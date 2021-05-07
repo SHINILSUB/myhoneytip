@@ -3,13 +3,27 @@ import { View, Image, Text, StyleSheet } from 'react-native'
 
 //MainPage로 부터 navigation 속성을 전달받아 Card 컴포넌트 안에서 사용
 export default function LikeCard({content,navigation}){
-    return(
+
+  const detail = () => {
+    navigation.navigate('DetailPage', {idx:Content.idx})
+  }
+  const remove = () => {
+
+  }
+    
+  
+  return(
         <View style={styles.card}>
             <Image style={styles.cardImage} source={{uri:content.image}}/>
             <View style={styles.cardText}>
                 <Text style={styles.cardTitle} numberOfLines={1}>{content.title}</Text>
                 <Text style={styles.cardDesc} numberOfLines={3}>{content.desc}</Text>
                 <Text style={styles.cardDate}>{content.date}</Text>
+
+                <View>
+                <TouchableOpacity style={styles.button} onPress={()=>detail()}><Text style={styles.buttonText}>자세히보기</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={()=>remove()}><Text style={styles.buttonText}>삭제</Text></TouchableOpacity>
+                </View>
             </View>
         </View>
     )

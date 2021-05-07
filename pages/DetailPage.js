@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import * as Linking from 'expo-linking';
 import { Share } from "react-native";
+import Constants from 'expo-constants';
+import {firebase_db} from "../firebaseConfig"
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 
 export default function DetailPage({ navigation, route }) {
+    let user_idx = Constants.installationId
+    console.log(user_idx)
 
     const [tip, setTip] = useState({
         "idx": 9,
@@ -27,11 +31,23 @@ export default function DetailPage({ navigation, route }) {
             },
             headerTintColor: "#fff",
         })
-        setTip(route.params)
+        //Get
+        const { idx } = route.params;
+        firebase_db.ref('/tip/' + idx).once('value').then((snapshot) => {
+            let tip = snapshot.val();
+            setTip(tip)
+        })
     }, [])
 
-    const popup = () => {
-        Alert.alert("팝업!!")
+    const like = () => {
+
+        // like Post
+        const user_id = Constants.installationId;
+        firebase_db.ref('/like/' + user_id + '/' + tip.idx).set(tip, 
+            function (error) {
+            console.log(error)
+            Alert.alert("찜")
+        });
     }
     const share = () => {
         Share.share({
@@ -50,7 +66,7 @@ export default function DetailPage({ navigation, route }) {
                 <Text style={styles.title}>{tip.title}</Text>
                 <Text style={styles.desc}>{tip.desc}</Text>
                 <View style={styles.buttonGroup}>
-                    <TouchableOpacity style={styles.button} onPress={popup}><Text style={styles.buttonText}>팁 찜하기</Text></TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={like}><Text style={styles.buttonText}>팁 찜하기</Text></TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={share}><Text style={styles.buttonText}>팁 공유하기</Text></TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={link}><Text style={styles.buttonText}>외부링크</Text></TouchableOpacity>
                 </View>
@@ -85,13 +101,13 @@ const styles = StyleSheet.create({
         color: "#eee"
     },
     buttonGroup: {
-        flexDirection:"row",
+        flexDirection: "row",
     },
     button: {
         width: 100,
         marginTop: 20,
-        marginRight:10,
-        marginLeft:10,
+        marginRight: 10,
+        marginLeft: 10,
         padding: 10,
         borderWidth: 1,
         borderColor: 'deeppink',

@@ -1,13 +1,13 @@
 
 import React, { useEffect, useState } from 'react';
 import main from '../assets/main.png';
-import data from '../data.json';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import Card from '../components/Card';
 import Loading from '../components/Loading';
 import * as Location from "expo-location";
 import axios from "axios"
 import { firebase_db } from "../firebaseConfig"
+
 
 export default function MainPage({ navigation }) {
   console.disableYellowBox = true;
@@ -22,10 +22,6 @@ export default function MainPage({ navigation }) {
 
   //useEffect를 거쳐야 useState에 저장
   useEffect(() => {
-
-    //뒤의 1000 숫자는 1초를 뜻함
-    //1초 뒤에 실행되는 코드들이 담겨 있는 함수
-    setTimeout(() => {
       //헤더의 타이틀 변경
       navigation.setOptions({
         title: '나만의 꿀팁'
@@ -38,7 +34,6 @@ export default function MainPage({ navigation }) {
         getLocation()
         setReady(false)
       })
-    }, 1000)
   }, [])
 
   const getLocation = async () => {
@@ -47,6 +42,7 @@ export default function MainPage({ navigation }) {
       const locationData = await Location.getCurrentPositionAsync()
       console.log(locationData['coords']['latitude'])
       console.log(locationData['coords']['longitude'])
+      
       const API_KEY = "cfc258c75e1da2149c33daffd07a911d";
       const result = await axios.get(
         `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
