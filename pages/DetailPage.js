@@ -40,11 +40,10 @@ export default function DetailPage({ navigation, route }) {
     }, [])
 
     const like = () => {
-
         // like Post
         const user_id = Constants.installationId;
-        firebase_db.ref('/like/' + user_id + '/' + tip.idx).set(tip, 
-            function (error) {
+        firebase_db.ref('/like/' + user_id + '/' + tip.idx)
+        .set(tip, function (error) {
             console.log(error)
             Alert.alert("찜")
         });
