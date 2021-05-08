@@ -1,6 +1,8 @@
 import React,{useState, useEffect} from 'react';
-import {ScrollView, Text, StyleSheet} from 'react-native';
+import { StyleSheet, ScrollView, } from 'react-native';
 import LikeCard from '../components/LikeCard';
+import Constants from 'expo-constants';
+import {firebase_db} from "../firebaseConfig"
 
 export default function LikePage({navigation}){
     
@@ -17,9 +19,17 @@ export default function LikePage({navigation}){
         navigation.setOptions({
             title:'꿀팁 찜'
         })
+        const user_id = Constants.installationId;
+        firebase_db.ref('/like/'+user_id).once('value')
+        .then((snapshot) => {
+            console.log("this is firebase")
+            let tip = snapshot.val();
+            setTip(tip)
+        })
     })
 
     return (
+        //LIkecard import
         <ScrollView style={styles.container}>
            {
                tip.map((content,i)=>{
